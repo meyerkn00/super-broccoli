@@ -3,3 +3,4 @@
 *.xlsx
 *.RData
 *.Rhistory
+.Rproj.user
