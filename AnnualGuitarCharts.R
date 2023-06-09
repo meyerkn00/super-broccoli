@@ -1,12 +1,15 @@
 # Initialize --------------------------------------------------------------
 
 ## load the below libraries before you start
+library(pacman)
 pacman::p_load("tidyverse","dplyr","readr","showtext","forcats")
 
-##Add apercu font
+## Add apercu font
+## Note: For the public version, the font name has been redacted and 
+## removed since the font is proprietary and could give away the identity of the client
 
-font_add(family = "apercu", regular = "Fonts/Apercu-Regular.otf")
-showtext_auto()
+#font_add(family = "REDACTED", regular = "Fonts/REDACTED-Regular.otf")
+#showtext_auto()
 
 
 # Load and Clean Data -----------------------------------------------------
@@ -59,7 +62,7 @@ chart2_total<- filter(chart2_data, name=="Total")
 ##Chart 2 data needs to be summarized, which is combining all of the factors that make up the larger categories
 #I do this by grouping by Category and Name, so the data is Organized into subsets like "AT1, Clarity and Belonging"
 #Then for each of these groups, I take the mean of value.r, which creates 1 number for the whole section (e.g. Clarity and Belonging)
-#Note, this means that the data column for chart1 is value.r, while for chart2 is value (sloppy, I know. Sorry)
+#Note, this means that the data column for chart1 is value.r, while for chart2 is value
 
 chart2_data.r<- chart2_data %>% 
   group_by(Category, name) %>% 
@@ -77,10 +80,6 @@ chart1summary<- chart1_data %>%
     Max = scales::percent(max(value.r))
   )
 
-#chart1summary
-
-#write.csv(chart1summary, file="Chart1summary.csv")
-
 
 chart2summary<- chart2_data.r %>% 
   group_by(Category) %>%
@@ -91,9 +90,6 @@ chart2summary<- chart2_data.r %>%
     Max = scales::percent(max(value))
   )
 
-#chart2summary
-
-#write.csv(chart2summary, file="Chart2summary.csv")
 
 # Chart 1 -----------------------------------------------------------------
 
@@ -156,7 +152,7 @@ chart1plot <- chart1_data %>%
   #geom_point()
   labs(x=NULL, y=NULL)+
   theme(
-    text=element_text(size=72/.pt,family="apercu"),
+    text=element_text(size=72/.pt),
     legend.text=element_text(size=54/.pt),
     #legend.position="none",
     #axis.text=element_blank(),
@@ -228,7 +224,7 @@ chart2plot <-ggplot(chart2_data.r,aes(x=Category,y=value)) +
   ))+
   labs(x=NULL, y=NULL)+
   theme(
-    text=element_text(size=72/.pt,family="apercu"),
+    text=element_text(size=72/.pt),
     legend.text=element_text(size=54/.pt),
     #legend.position="none",
     #axis.text=element_blank(),
@@ -250,134 +246,7 @@ chart2plot <-ggplot(chart2_data.r,aes(x=Category,y=value)) +
   #coord_flip()
 
 
-n=n+1
-ggsave(filename=paste("Images/Chart2plot.",n,format(Sys.Date(),"%m.%d"),".png", sep=""),
+ggsave(filename=paste("Images/Chart2plot.",format(Sys.Date(),"%m.%d"),".png", sep=""),
        dpi=96,plot=chart2plot,width=24,height=9,units="in")
 
 chart2plot
-
-# Old Charts --------------------------------------------------------------
-
-# chart1plot <-ggplot(chart1_data,aes(x=Category,y=value.r)) +
-#   #geom_vline(aes(xintercept=8),color="black")+
-#   geom_point(aes(color=name),size=5) +
-#   scale_y_continuous(limits=c(0.5,1)) +
-#   scale_color_manual(values=c("AT Team #1"="#A11622",
-#                               "AT Team #2"="#FF0000",
-#                               "AT Team #3"="#FE517A",
-#                               "MW Team #1"="#00008B",
-#                               "MW Team #2"="#1C62A6",
-#                               "NE Team #1"="#00B050",
-#                               "NE Team #2"="#92D050",
-#                               "SE Team #1"="#FFFF00",
-#                               "SE Team #2"="#FFC000",
-#                               "SE Team #3"="#ED7817",
-#                               "SW Team #1"="#7030A0",
-#                               "SW Team #2"="#A162D0",
-#                               "SW Team #3"="#CDACE6",
-#                               "West Team #1"="#282F34",
-#                               "West Team #2"="#7D8E99",
-#                               "West Team #3"="#A8B3BB"
-#                               ))+
-#   labs(x=NULL, y=NULL)+
-#   #scale_x_discrete(breaks=c(8))+
-#   theme(
-#     text=element_text(size=58/.pt,family="apercu"),
-#     legend.text=element_text(size=18),
-#     #legend.position="none",
-#     #axis.text=element_blank(),
-#     axis.ticks=element_blank(),
-#     legend.key=element_blank(),
-#     legend.title=element_blank(),
-#     panel.background = element_rect(fill = NA),
-#     panel.grid.major.x = element_blank(),
-#     panel.grid.minor.x = element_blank(),
-#     panel.grid.major.y = element_line(colour = "#D5E7F8"),
-#     panel.ontop = FALSE)+
-#   coord_flip()
-# 
-# chart1plot
-# 
-# 
-# ggsave(filename=paste("Images/Test/q72022plot.",format(Sys.Date(),"%m.%d"),".png", sep=""),plot=q72022plot,width=8,height=4)
-# 
-# 
-# chart1plot <-ggplot(chart1_data,aes(x=Category,y=value.r)) +
-#   #geom_vline(aes(xintercept=8),color="black")+
-#   geom_point(aes(color=name),size=5) +
-#   scale_y_continuous(limits=c(0.5,1)) +
-#   scale_color_manual(values=c("AT Team #1"="#A11622",
-#                               "AT Team #2"="#FF0000",
-#                               "AT Team #3"="#FE517A",
-#                               "MW Team #1"="#00008B",
-#                               "MW Team #2"="#1C62A6",
-#                               "NE Team #1"="#00B050",
-#                               "NE Team #2"="#92D050",
-#                               "SE Team #1"="#FFFF00",
-#                               "SE Team #2"="#FFC000",
-#                               "SE Team #3"="#ED7817",
-#                               "SW Team #1"="#7030A0",
-#                               "SW Team #2"="#A162D0",
-#                               "SW Team #3"="#CDACE6",
-#                               "West Team #1"="#282F34",
-#                               "West Team #2"="#7D8E99",
-#                               "West Team #3"="#A8B3BB"
-#   ))+
-#   labs(x=NULL, y=NULL)+
-#   #scale_x_discrete(breaks=c(8))+
-#   theme(
-#     text=element_text(size=58/.pt,family="apercu"),
-#     legend.text=element_text(size=18),
-#     #legend.position="none",
-#     #axis.text=element_blank(),
-#     axis.ticks=element_blank(),
-#     legend.key=element_blank(),
-#     legend.title=element_blank(),
-#     panel.background = element_rect(fill = NA),
-#     panel.grid.major.x = element_blank(),
-#     panel.grid.minor.x = element_blank(),
-#     panel.grid.major.y = element_line(colour = "#D5E7F8"),
-#     panel.ontop = FALSE)+
-#   coord_flip()
-# 
-# chart1plot
-# 
-# testplot2 <-ggplot(chart1_data,aes(x=Category,y=value.r)) +
-#   geom_dotplot(aes(fill=name,color=NULL),binwidth=.01,stackdir="center",binaxis="y",
-#                dotsize=.5,stackgroups = TRUE,
-#                binpositions="all"
-#   ) +
-#   #scale_y_continuous(limits=c(0.5,1)) +
-#   scale_fill_manual(values=c("AT Team #1"="#A11622",
-#                              "AT Team #2"="#FF0000",
-#                              "AT Team #3"="#FE517A",
-#                              "MW Team #1"="#00008B",
-#                              "MW Team #2"="#1C62A6",
-#                              "NE Team #1"="#00B050",
-#                              "NE Team #2"="#92D050",
-#                              "SE Team #1"="#FFFF00",
-#                              "SE Team #2"="#FFC000",
-#                              "SE Team #3"="#ED7817",
-#                              "SW Team #1"="#7030A0",
-#                              "SW Team #2"="#A162D0",
-#                              "SW Team #3"="#CDACE6",
-#                              "West Team #1"="#282F34",
-#                              "West Team #2"="#7D8E99",
-#                              "West Team #3"="#A8B3BB"
-#   ))+
-#   labs(x=NULL, y=NULL)+
-#   theme(
-#     text=element_text(size=58/.pt,family="apercu"),
-#     legend.text=element_text(size=18),
-#     legend.position="none",
-#     #axis.text=element_blank(),
-#     axis.ticks=element_blank(),
-#     legend.key=element_blank(),
-#     legend.title=element_blank(),
-#     panel.background = element_rect(fill = NA),
-#     panel.grid.major.x = element_blank(),
-#     panel.grid.minor.x = element_blank(),
-#     panel.grid.major.y = element_line(colour = "#D5E7F8"),
-#     panel.ontop = FALSE)+
-#   coord_flip()
-# testplot2
