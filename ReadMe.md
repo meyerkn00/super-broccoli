@@ -1,4 +1,4 @@
-# NOTE: The code currently will not run due to intentionally missing files. For client confidentiality, the .csv data file as well as the proprietary font have not been added to this github. If you would like to run this code, please reach out to me at karl+gh@themeyers.org and I will provide anonymized data.
+# NOTE: The code currently will not run due to intentionally missing files. For client confidentiality, the data file as well as a proprietary font have not been added to this github. If you would like to run this code, please reach out to me at karl+gh@themeyers.org and I will provide anonymized data.
 
 ## Guitar Chart Graph Example
 This is sample code for a graph created custom for a client. 
