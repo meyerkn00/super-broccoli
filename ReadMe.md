@@ -10,4 +10,4 @@ Originally this was done with a scatterplot, but the downside was that individua
 
 I then created a dotplot variant, which is a ggplot graph that has dot binning and stacking built in. The result is less clean, but much easier to read.
 
-The graph became part of a report delivered to the client with broader analysis. The client specifically requested a cleaner style than default ggplot provides, so I customized the graph to remove much of the lables and gridlines.
+The graph became part of a report delivered to the client with broader analysis. The client specifically requested a cleaner style than default ggplot provides, so I customized the graph to remove much of the labels and gridlines.
